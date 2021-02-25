@@ -1,0 +1,51 @@
+public class RevBucketDetailController {
+    
+    public Opportunity opp { get; set; }
+    
+    public RevBucketDetailController(ApexPages.StandardController stdController) {
+        this.opp = getRevBuckets(stdController.getId());
+    }
+    
+    public List<Schema.FieldSetMember> getExpansion() {
+        return SObjectType.Opportunity.FieldSets.Expansion_Fields.getFields();
+    }
+    
+    public List<Schema.FieldSetMember> getRecapture() {
+        return SObjectType.Opportunity.FieldSets.Recapture_Fields.getFields();
+    }
+    
+    public List<Schema.FieldSetMember> getOnTime() {
+        return SObjectType.Opportunity.FieldSets.On_Time_Renewal_Fields.getFields();
+    }
+    
+    public List<Schema.FieldSetMember> getEarly() {
+        return SObjectType.Opportunity.FieldSets.Early_Renewal_Fields.getFields();
+    }
+    
+    public List<Schema.FieldSetMember> getLate() {
+        return SObjectType.Opportunity.FieldSets.Late_Renewal_Fields .getFields();
+    }
+    
+    public Opportunity getRevBuckets(Id recordId) {
+        String query = 'SELECT ';
+        for(Schema.FieldSetMember f : this.getOnTime()) {
+            query += f.getFieldPath() + ', ';
+        }
+        for(Schema.FieldSetMember f : this.getEarly()) {
+            query += f.getFieldPath() + ', ';
+        }
+        for(Schema.FieldSetMember f : this.getLate()) {
+            query += f.getFieldPath() + ', ';
+        }
+        for(Schema.FieldSetMember f : this.getExpansion()) {
+            query += f.getFieldPath() + ', ';
+        }
+        for(Schema.FieldSetMember f : this.getRecapture()) {
+            query += f.getFieldPath() + ', ';
+        }
+        query += 'Id, Name FROM Opportunity WHERE Id = \''+recordId+'\' LIMIT 1';
+        
+        return Database.query(query);
+    }
+    
+}
