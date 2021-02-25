@@ -1,0 +1,33 @@
+<apex:page standardController="Opportunity" extensions="RevBucketDetailController" lightningStylesheets="true"> 
+    <apex:form >
+        <apex:pageBlock title="Revenue Details">
+            <apex:pageBlockSection title="Renewal">
+                <apex:pageBlockSection title="Early">
+                    <apex:repeat value="{!early}" var="f">
+                        <apex:outputField label="{!LEFT(f.label,3)}" value="{!opp[f.fieldPath]}"/>
+                    </apex:repeat>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="On-Time">
+                    <apex:repeat value="{!onTime}" var="f">
+                        <apex:outputField label="{!LEFT(f.label,3)}" value="{!opp[f.fieldPath]}"/>
+                    </apex:repeat>
+                </apex:pageBlockSection> 
+                <apex:pageBlockSection title="Late">
+                    <apex:repeat value="{!late}" var="f">
+                        <apex:outputField label="{!LEFT(f.label,3)}" value="{!opp[f.fieldPath]}"/>
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Expansion">
+                <apex:repeat value="{!expansion}" var="f">
+                    <apex:outputField label="{!LEFT(f.label,3)}" value="{!opp[f.fieldPath]}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Recapture">
+                <apex:repeat value="{!recapture}" var="f">
+                    <apex:outputField label="{!LEFT(f.label,3)}" value="{!opp[f.fieldPath]}"/>
+                </apex:repeat>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
